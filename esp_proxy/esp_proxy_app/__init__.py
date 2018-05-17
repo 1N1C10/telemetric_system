@@ -8,8 +8,11 @@ log = app.logger
 log.setLevel(logging.DEBUG)
 
 allowed_tokens = dict(
-    token123121="esp_dev_1"
+    token123121="esp_dev_1",
+    token123121_mq135="esp_mq135"
 )
+
+OVH_WRITE_TOKEN = "KcJb_cJ3ZQG3.x8auMerMF_5CcMp.DsbdcWIbSi6JM1fgP1FIbH2_moPeIRPh2bVuEE1k8SNQwhd0R5LRjNTwCh6fnSjjvMtP.ipYEk1r96EPZlI6uCvmjhSzKnXw7HJ"
 
 @app.route('/write', methods=['POST'])
 def proxy_post():
@@ -50,7 +53,7 @@ def proxy_post():
         log.debug("labeled_data {}".format(labeled_data))
         response = requests.post("https://warp10.gra1.metrics.ovh.net/api/v0/update",
                              data=labeled_data,
-                             headers={'X-Warp10-Token':"KcJb_cJ3ZQG3.x8auMerMF_5CcMp.DsbdcWIbSi6JM1fgP1FIbH2_moPeIRPh2bVuEE1k8SNQwhd0R5LRjNTwCh6fnSjjvMtP.ipYEk1r96EPZlI6uCvmjhSzKnXw7HJ"})
+                             headers={'X-Warp10-Token':OVH_WRITE_TOKEN})
         log.debug("response {} {}".format(response, response.__dict__))
     except Exception as exception:
         log.debug("Could not send data, exception {}".format(exception))
