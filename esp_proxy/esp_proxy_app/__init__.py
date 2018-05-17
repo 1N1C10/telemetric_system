@@ -13,6 +13,7 @@ allowed_tokens = dict(
 )
 
 OVH_WRITE_TOKEN = "KcJb_cJ3ZQG3.x8auMerMF_5CcMp.DsbdcWIbSi6JM1fgP1FIbH2_moPeIRPh2bVuEE1k8SNQwhd0R5LRjNTwCh6fnSjjvMtP.ipYEk1r96EPZlI6uCvmjhSzKnXw7HJ"
+#mateusz write token > #OVH_WRITE_TOKEN="J9YO478ZoGxR9c90kCt9tsq_g9zLZ_KhzOW3xw1buV0SQPc5VxAU.6oYRRMVAcEtLxSgk2S4OT1VkG9x8YRL5LZ2N_bVqXZ0od.KM7K1jmNBbCc43.VwZLaHu9Jfrch6"
 
 @app.route('/write', methods=['POST'])
 def proxy_post():
