@@ -9,7 +9,7 @@ log.setLevel(logging.DEBUG)
 
 allowed_tokens = dict(
     token123121="esp_dev_1",
-    token123121_mq135="esp_mq135"
+    token123121_mq135="esp_mq135",
     token123121_mq5="esp_mq5"
 )
 
