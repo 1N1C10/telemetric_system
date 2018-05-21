@@ -9,7 +9,13 @@ log.setLevel(logging.DEBUG)
 
 allowed_tokens = dict(
     token123121="esp_dev_1",
-    token123121_mq135="esp_mq135"
+    token123121_mq135="esp_mq135",
+    token123121_mq5="esp_mq5",
+    token123121_mp503="esp_mp503",
+    token123121_tsl2581fn="esp_tsl2581fn",
+    token123121_dfrobot="esp_dfrobot",
+    token123121_ds18b20="esp_ds18b20",
+    token123121_hcsr501="esp_hcsr501"
 )
 
 OVH_WRITE_TOKEN = "KcJb_cJ3ZQG3.x8auMerMF_5CcMp.DsbdcWIbSi6JM1fgP1FIbH2_moPeIRPh2bVuEE1k8SNQwhd0R5LRjNTwCh6fnSjjvMtP.ipYEk1r96EPZlI6uCvmjhSzKnXw7HJ"
