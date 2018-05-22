@@ -1,4 +1,3 @@
-
 import urequests
 
 ovh_config = {
@@ -26,9 +25,3 @@ def send_to_ovh_metrics(sensor_name, value, data_type=None):
     )
     print(response.__dict__)
     return response
-
-"""
-if __name__ == "__main__":
-    import random
-    send_to_ovh_metrics("esp_dev_1", random.randrange(999))
-"""
