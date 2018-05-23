@@ -20,7 +20,7 @@ while not sta_if.isconnected():
 
 
 def start():
-    print("Starting hcsr501")
+    print("Starting esp_mq5")
     failed_attempts = 0
     while True:
         data = mq5.modulmq5()
