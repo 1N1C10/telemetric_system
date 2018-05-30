@@ -21,16 +21,20 @@ while not sta_if.isconnected():
 
 
 def start():
-    print("Starting mq135")
-    failed_attempts = 0
-    while True:
-        data = mq135.modulmq135()
-        if data:
-            resp = esp_send_func.send_to_ovh_metrics(sensor_name="esp_mq135",value=data)
-            if not resp:
-                if failed_attempts > max_failed:
-                    machine.reset()
-                else:
-                    failed_attempts = failed_attempts + 1
-        utime.sleep(sleep_sec)
-
+    try:
+        print("Starting mq135")
+        failed_attempts = 0
+        while True:
+            data = mq135.modulmq135()
+            if data:
+                resp = esp_send_func.send_to_ovh_metrics(sensor_name="esp_mq135",value=data)
+                if not resp:
+                    if failed_attempts > max_failed:
+                        machine.reset()
+                    else:
+                        failed_attempts = failed_attempts + 1
+            utime.sleep(sleep_sec)
+    except Exception as e:
+        print("Start failed due to exception: {}".format(e))
+        print("Reloading ESP!")
+        machine.reset()
