@@ -1,31 +1,28 @@
-
 import urequests
 
-ovh_config = {
-    "sensors": {
-        "esp_ds18b20":{
-            "token":"token123121_ds18b20",
-            "default_data_type":"temperature"
-        }
+config = {
+    "esp_ds18b20": {
+        "token": "token_ds18b20",
+        "sensor_data_type": "temperature",
     },
     "metrics_proxy": {
-        "address":"https://192.168.43.9/write",
-        "port":443
+        "address": "https://192.168.43.9/write",
+        "port": 443
     }
 }
 
 
-def send_to_ovh_metrics(sensor_name, value, data_type=None):
-
+def send_to_proxy(sensor_name, value, data_type=None):
     if not data_type:
-        data_type = ovh_config["sensors"][sensor_name]["default_data_type"]
+        data_type = config[sensor_name]["sensor_data_type"]
     response = urequests.post(
-        ovh_config["metrics_proxy"]["address"],
-        json={"data_type":data_type, "value":value},
-        headers={"Content-Type":"application/json","X-SENSOR-TOKEN":ovh_config["sensors"][sensor_name]["token"]}
+        config["metrics_proxy"]["address"],
+        json={"data_type": data_type, "value": value},
+        headers={"Content-Type": "application/json", "sensor_token": config[sensor_name]["token"]}
     )
     print(response.__dict__)
     return response
+
 
 """
 if __name__ == "__main__":

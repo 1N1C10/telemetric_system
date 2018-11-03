@@ -1,30 +1,28 @@
 from flask import Flask, request, jsonify, Response
-#from flask_api import status
-import requests
+from influxdb import InfluxDBClient
+
 import logging
 from datetime import datetime
+
+client = InfluxDBClient('localhost', 8086, 'root', 'root', 'sensordb')
 app = Flask(__name__)
 log = app.logger
 log.setLevel(logging.DEBUG)
 
-allowed_tokens = dict(
-    token123121="esp_dev_1",
-    token123121_mq135="esp_mq135",
-    token123121_mq5="esp_mq5",
-    token123121_mp503="esp_mp503",
-    token123121_tsl2581fn="esp_tsl2581fn",
-    token123121_dfrobot="esp_dfrobot",
-    token123121_ds18b20="esp_ds18b20",
-    token123121_hcsr501="esp_hcsr501"
+allowed_sensors = dict(
+    token_mq135="esp_mq135",
+    token_mq5="esp_mq5",
+    token_mp503="esp_mp503",
+    token_tsl2581fn="esp_tsl2581fn",
+    token_dfrobot="esp_dfrobot",
+    token_ds18b20="esp_ds18b20",
+    token_hcsr501="esp_hcsr501"
 )
 
-#OVH_WRITE_TOKEN = "KcJb_cJ3ZQG3.x8auMerMF_5CcMp.DsbdcWIbSi6JM1fgP1FIbH2_moPeIRPh2bVuEE1k8SNQwhd0R5LRjNTwCh6fnSjjvMtP.ipYEk1r96EPZlI6uCvmjhSzKnXw7HJ"
-#OVH_WRITE_TOKEN="J9YO478ZoGxR9c90kCt9tsq_g9zLZ_KhzOW3xw1buV0SQPc5VxAU.6oYRRMVAcEtLxSgk2S4OT1VkG9x8YRL5LZ2N_bVqXZ0od.KM7K1jmNBbCc43.VwZLaHu9Jfrch6"
-OVH_WRITE_TOKEN="pJRSH9OUU0APawbTfuxnxRaTANw6HfW7f4QiANhsILtEOPpcfla.syyW5WVJNC_ebYEJh.FE_BLSacxYZNSBCvbtFdm4dNvv_mqqRdt5F1953iCtDNRwc95hOxKxbIFt"
 
 @app.route('/write', methods=['POST'])
 def proxy_post():
-    sensor_token = request.headers.get("X-SENSOR-TOKEN", None)
+    sensor_token = request.headers.get("sensor_token", None)
     data = request.get_json()
     log.debug("sensor_token {}".format(sensor_token))
     log.debug("json data {}".format(data))
@@ -35,7 +33,7 @@ def proxy_post():
         response.status_code = 400
         return response
 
-    if sensor_token not in allowed_tokens:
+    if sensor_token not in allowed_sensors:
         response = jsonify(error="Sensor is not allowed")
         response.status_code = 401
         return response
@@ -51,24 +49,23 @@ def proxy_post():
         return response
 
     try:
-        labeled_data = "{timestamp}// {metric_name}{{{labels}}} {metric_value}".format(
-            timestamp = int(round(datetime.now().timestamp() *1000000)),
-            metric_name=allowed_tokens.get(sensor_token),
-            labels="data_type={data_type}".format(data_type=data.get("data_type")),
-            metric_value=data.get("value")
-
-        )
-        log.debug("labeled_data {}".format(labeled_data))
-        response = requests.post("https://warp10.gra1.metrics.ovh.net/api/v0/update",
-                             data=labeled_data,
-                             headers={'X-Warp10-Token':OVH_WRITE_TOKEN})
-        log.debug("response {} {}".format(response, response.__dict__))
+        sensor_data = [
+            {
+                "time": datetime.now(),
+                "measurement": "temperature",
+                "fields": {
+                    "value": data.get("value")
+                }
+            }
+        ]
+        log.debug("labeled_data {}".format(sensor_data))
+        client.write(sensor_data)
     except Exception as exception:
         log.debug("Could not send data, exception {}".format(exception))
-        return Response(response="Could not send data",status=500)
+        return Response(response="Could not send data", status=500)
 
-    return jsonify({"data":str(labeled_data)})
+    return jsonify({"data": str(sensor_data)})
 
 
 if __name__ == "__main__":
-    app.run(ssl_context=("cert.pem", "key.pem"), debug=True, host='0.0.0.0', port=443)
+    app.run(debug=True, host='0.0.0.0', port=443)

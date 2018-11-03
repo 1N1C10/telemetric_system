@@ -1,4 +1,3 @@
-curl -kv -H "Content-Type: application/json" -H "X-SENSOR-TOKEN: token123121" -XPOST https://127.0.0.1/write --data '{"data_type":"temperature","value":52}'
 curl -kv -H "Content-Type: application/json" -H "X-SENSOR-TOKEN: token123121_mq135" -XPOST https://127.0.0.1/write --data '{"data_type":"temperature","value":52}'
 curl -kv -H "Content-Type: application/json" -H "X-SENSOR-TOKEN: token123121_mq5" -XPOST https://127.0.0.1/write --data '{"data_type":"temperature","value":52}'
 curl -kv -H "Content-Type: application/json" -H "X-SENSOR-TOKEN: token123121_mp503" -XPOST https://127.0.0.1/write --data '{"data_type":"temperature","value":52}'
@@ -9,7 +8,6 @@ curl -kv -H "Content-Type: application/json" -H "X-SENSOR-TOKEN: token123121_hcs
 
 sleep 2
 
-curl -kv -H "Content-Type: application/json" -H "X-SENSOR-TOKEN: token123121" -XPOST https://127.0.0.1/write --data '{"data_type":"temperature","value":152}'
 curl -kv -H "Content-Type: application/json" -H "X-SENSOR-TOKEN: token123121_mq135" -XPOST https://127.0.0.1/write --data '{"data_type":"temperature","value":152}'
 curl -kv -H "Content-Type: application/json" -H "X-SENSOR-TOKEN: token123121_mq5" -XPOST https://127.0.0.1/write --data '{"data_type":"temperature","value":152}'
 curl -kv -H "Content-Type: application/json" -H "X-SENSOR-TOKEN: token123121_mp503" -XPOST https://127.0.0.1/write --data '{"data_type":"temperature","value":152}'
@@ -21,7 +19,6 @@ curl -kv -H "Content-Type: application/json" -H "X-SENSOR-TOKEN: token123121_hcs
 
 sleep 3
 
-curl -kv -H "Content-Type: application/json" -H "X-SENSOR-TOKEN: token123121" -XPOST https://127.0.0.1/write --data '{"data_type":"temperature","value":5}'
 curl -kv -H "Content-Type: application/json" -H "X-SENSOR-TOKEN: token123121_mq135" -XPOST https://127.0.0.1/write --data '{"data_type":"temperature","value":5}'
 curl -kv -H "Content-Type: application/json" -H "X-SENSOR-TOKEN: token123121_mq5" -XPOST https://127.0.0.1/write --data '{"data_type":"temperature","value":5}'
 curl -kv -H "Content-Type: application/json" -H "X-SENSOR-TOKEN: token123121_mp503" -XPOST https://127.0.0.1/write --data '{"data_type":"temperature","value":5}'

@@ -27,7 +27,7 @@ def start():
         while True:
             data = data = ds18b20.modulDS18B20()
             if data:
-                resp = esp_send_func.send_to_ovh_metrics(sensor_name="esp_ds18b20",value=data)
+                resp = esp_send_func.send_to_proxy(sensor_name="esp_ds18b20", value=data)
                 if not resp:
                     if failed_attempts > max_failed:
                         machine.reset()
