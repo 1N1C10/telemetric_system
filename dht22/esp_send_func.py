@@ -1,9 +1,9 @@
 import urequests
 
 config = {
-    "esp_ds18b20": {
-        "token": "token_ds18b20",
-        "sensor_data_type": "temperature",
+    "esp_dht22": {
+        "token": "token_dht22",
+        "sensor_data_type": "humidity",
     },
     "metrics_proxy": {
         "address": "https://192.168.43.9/write",
