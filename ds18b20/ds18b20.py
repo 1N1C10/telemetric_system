@@ -1,5 +1,5 @@
-import utime
 import machine
+import utime
 import onewire, ds18x20
 
 dat = machine.Pin(12)
@@ -10,5 +10,5 @@ rom = roms[0]
 
 def modulDS18B20():
     ds.convert_temp()
-    utime.sleep_ms(750)
+    utime.sleep(1)
     return ds.read_temp(rom)

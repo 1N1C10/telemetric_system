@@ -2,7 +2,6 @@ from flask import Flask, request, jsonify, Response
 from influxdb import InfluxDBClient
 
 import logging
-from datetime import datetime
 
 client = InfluxDBClient('localhost', 8086, 'root', 'root', 'sensordb')
 app = Flask(__name__)
@@ -22,50 +21,41 @@ allowed_sensors = dict(
 
 @app.route('/write', methods=['POST'])
 def proxy_post():
-    sensor_token = request.headers.get("sensor_token", None)
+    sensor_token = request.headers.get("sensor_token")
     data = request.get_json()
     log.debug("sensor_token {}".format(sensor_token))
     log.debug("json data {}".format(data))
     log.debug("post data {}".format(request.get_data()))
 
     if type(data) is not dict:
-        response = jsonify(error="Data structure is incorrect")
-        response.status_code = 400
-        return response
+        return Response(response="Wrong data type", status=400)
 
     if sensor_token not in allowed_sensors:
-        response = jsonify(error="Sensor is not allowed")
-        response.status_code = 401
-        return response
+        return Response(response="Sensor is not allowed", status=401)
 
     if "data_type" not in data:
-        response = jsonify(error="Data not correct, 'data_type' is missing")
-        response.status_code = 400
-        return response
+        return Response(response="Data received not correct, missing 'data_type'", status=400)
 
     if "value" not in data:
-        response = jsonify(error="Data not correct, 'value' is missing")
-        response.status_code = 400
-        return response
+        return Response(response="Data received not correct, missing 'value'", status=400)
 
     try:
         sensor_data = [
             {
-                "time": datetime.now(),
-                "measurement": "temperature",
+                "measurement": data['data_type'],
                 "fields": {
-                    "value": data.get("value")
+                    "value": data['value']
                 }
             }
         ]
         log.debug("labeled_data {}".format(sensor_data))
-        client.write(sensor_data)
+        client.write_points(sensor_data)
     except Exception as exception:
-        log.debug("Could not send data, exception {}".format(exception))
+        log.error("Could not send data, exception {}".format(exception))
         return Response(response="Could not send data", status=500)
 
     return jsonify({"data": str(sensor_data)})
 
 
 if __name__ == "__main__":
-    app.run(debug=True, host='0.0.0.0', port=443)
+    app.run(ssl_context='adhoc', debug=True, host='0.0.0.0', port=443)
