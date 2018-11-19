@@ -15,6 +15,7 @@ allowed_sensors = dict(
     token_tsl2581fn="esp_tsl2581fn",
     token_dfrobot="esp_dfrobot",
     token_ds18b20="esp_ds18b20",
+    token_light="esp_light",
 )
 
 

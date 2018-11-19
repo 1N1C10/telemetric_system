@@ -1,5 +1,5 @@
 import esp_send_func
-import dht22
+import light
 import machine
 import utime
 import network
@@ -22,10 +22,10 @@ while not sta_if.isconnected():
 
 def start():
     try:
-        print("Starting dht22")
+        print("Starting light sensor")
         while True:
-            data = dht22.modulDHT22()
-            resp = esp_send_func.send_to_proxy(sensor_name="esp_dht22", value=data)
+            data = light.modulLIGHT()
+            resp = esp_send_func.send_to_proxy(sensor_name="esp_light", value=data)
             utime.sleep(sleep_sec)
     except Exception as e:
         print("Start failed due to exception: {}".format(e))
