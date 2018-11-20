@@ -22,7 +22,7 @@ while not sta_if.isconnected():
 
 def start():
     try:
-        print("Starting mq135")
+        print("Starting mp503")
         while True:
             data = mp503.modulMP503()
             resp = esp_send_func.send_to_proxy(sensor_name="esp_mp503", value=data)

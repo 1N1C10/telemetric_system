@@ -9,7 +9,7 @@ log = app.logger
 log.setLevel(logging.DEBUG)
 
 allowed_sensors = dict(
-    token_mq135="esp_mp503",
+    token_mp503="esp_mp503",
     token_dht22="esp_dht22",
     token_dfrobot="esp_dfrobot",
     token_ds18b20="esp_ds18b20",

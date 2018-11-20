@@ -1,9 +1,9 @@
 import urequests
 
 config = {
-    "esp_mq135": {
+    "esp_mp503": {
         "token": "token_mp503",
-        "sensor_data_type": "airquality",
+        "sensor_data_type": "air_quality",
     },
     "metrics_proxy": {
         "address": "https://192.168.43.9/write",
