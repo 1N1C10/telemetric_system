@@ -10,7 +10,6 @@ config = {
         "port": 443
     }
 }
-s
 
 
 def send_to_proxy(sensor_name, value, data_type=None):
