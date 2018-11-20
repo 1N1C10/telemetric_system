@@ -1,7 +1,7 @@
 import urequests
 
 config = {
-    "esp_mq135": {
+    "esp_mp503": {
         "token": "token_mq135",
         "sensor_data_type": "airquality",
     },
